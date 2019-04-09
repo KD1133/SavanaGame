@@ -1,0 +1,9 @@
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\obj\Debug\netcoreapp2.1\SavanaGameInterfaces.csprojAssemblyReference.cache
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\obj\Debug\netcoreapp2.1\SavanaGameInterfaces.csproj.CoreCompileInputs.cache
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\obj\Debug\netcoreapp2.1\SavanaGameInterfaces.AssemblyInfoInputs.cache
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\obj\Debug\netcoreapp2.1\SavanaGameInterfaces.AssemblyInfo.cs
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\bin\Debug\netcoreapp2.1\SavanaGameInterfaces.deps.json
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\bin\Debug\netcoreapp2.1\SavanaGameInterfaces.dll
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\bin\Debug\netcoreapp2.1\SavanaGameInterfaces.pdb
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\obj\Debug\netcoreapp2.1\SavanaGameInterfaces.dll
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterfaces\obj\Debug\netcoreapp2.1\SavanaGameInterfaces.pdb

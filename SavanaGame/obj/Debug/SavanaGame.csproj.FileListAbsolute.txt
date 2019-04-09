@@ -1,0 +1,10 @@
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.csprojAssemblyReference.cache
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.csproj.CoreCompileInputs.cache
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\SavanaGame.exe.config
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\SavanaGame.exe
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\SavanaGame.pdb
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\SavanaGameInterface.dll
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\SavanaGameInterface.pdb
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.csproj.CopyComplete
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.exe
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.pdb
