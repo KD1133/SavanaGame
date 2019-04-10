@@ -6,17 +6,17 @@
         {
             VisionRange = 4;
             RunSpeed = 2;
-            DisplayChar = char.Parse("A");
+            DisplayChar = 'A';
         }
 
         public bool LookAround(char[,] map)
         {
-            return base.LookAround(map, char.Parse("L"));
+            return base.LookAround(map, 'L');
         }
 
         public int SpecialMove(char[,] map)
         {
-            return base.SpecialMove(map, char.Parse("L"), false);
+            return base.SpecialMove(map, 'L', false);
         }
     }
 }

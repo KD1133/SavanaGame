@@ -3,5 +3,6 @@
     public interface IReader
     {
         char ReadChar();
+        bool KeyPresed();
     }
 }

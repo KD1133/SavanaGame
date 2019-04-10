@@ -1,7 +1,5 @@
 ﻿using SavanaGameInterface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 namespace SavanaGame
 {
     public class CosoleFacade : IConsoleFacade
@@ -18,7 +16,26 @@ namespace SavanaGame
 
         public char ReadChar()
         {
-            return char.Parse(Console.ReadKey().Key.ToString());
+            try
+            {
+                return char.Parse(Console.ReadKey(true).Key.ToString());
+            }
+            catch
+            {
+                return ' ';
+            }
+        }
+
+        public bool KeyPresed()
+        {
+            if (Console.KeyAvailable)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

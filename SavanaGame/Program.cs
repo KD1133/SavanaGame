@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Startup startup = new Startup();
+            Start startup = new Start();
             startup.Run();
         }
     }

@@ -49,6 +49,7 @@
     <Compile Include="IConsoleFacade.cs" />
     <Compile Include="IFieldReader.cs" />
     <Compile Include="IFields.cs" />
+    <Compile Include="IFieldChangesFacade.cs" />
     <Compile Include="IPrinter.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

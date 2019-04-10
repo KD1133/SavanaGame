@@ -1,42 +1,52 @@
 ﻿using SavanaGameInterface;
+using System;
 
 namespace SavanaGame
 {
     public class GameEngine
     {
-        private IAnimalFactory _animalFactory { get; set; }
-        private IAnimalIterator _animalIterator { get; set; }
-        private IAnimalMover _animalMover { get; set; }
-        private IReader _reader { get; set; }
+        private readonly IAnimalIterator _animalIterator;
+        private readonly IReader _reader;
+        private readonly IFieldChangesFacade _fieldChangesFacade;
+        private static Random _Rnd = new Random();
 
         public GameEngine(
-            IAnimalFactory animalFactory, 
             IAnimalIterator animalIterator, 
-            IAnimalMover animalMover, 
-            IReader reader)
+            IReader reader,
+            IFieldChangesFacade fieldChangesFacade
+            )
         {
-            _animalFactory = animalFactory;
             _animalIterator = animalIterator;
-            _animalMover = animalMover;
             _reader = reader;
+            _fieldChangesFacade = fieldChangesFacade;
         }
         
         public void Run()
         {
-            IAnimal animal = _animalFactory.SpawnAnimal(1);
-            _animalMover.Add(animal, 20, 20);
-            animal = _animalFactory.SpawnAnimal(0);
-            _animalMover.Add(animal, 22, 20);
-            animal = _animalFactory.SpawnAnimal(0);
-            _animalMover.Add(animal, 18, 20);
-            animal = _animalFactory.SpawnAnimal(0);
-            _animalMover.Add(animal, 20, 22);
-            animal = _animalFactory.SpawnAnimal(0);
-            _animalMover.Add(animal, 20, 18);
             System.Console.Read();
             do {
-                _animalIterator.Iterate();
-                System.Threading.Thread.Sleep(1000);
+                while (!_reader.KeyPresed())
+                {
+                    _animalIterator.Iterate();
+                    System.Threading.Thread.Sleep(200);
+                }
+                char input = _reader.ReadChar();
+                int xPosition = _Rnd.Next(1, Start.Width);
+                int yPosition = _Rnd.Next(1, Start.Height);
+                int animalType = -1;
+                switch (input)
+                {
+                    case 'A':
+                        animalType = 0;
+                        break;
+                    case 'L':
+                        animalType = 1;
+                        break;
+                }
+                if(animalType >= 0)
+                {
+                    _fieldChangesFacade.Add(animalType, xPosition, yPosition);
+                }
             } while (true);
         }
     }

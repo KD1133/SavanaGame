@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SavanaGameInterface;
+using System;
 
 namespace SavanaGame
 {
@@ -7,44 +8,28 @@ namespace SavanaGame
 
     public abstract class Animal
     {
-        private static Random _Rnd = new Random();
-        
+        protected readonly IFieldReader _fieldReader;
+        protected readonly IFieldChangesFacade _movementFacade;
+        protected static Random Rnd = new Random();
+
+        protected Animal(IFieldReader fieldReader, IFieldChangesFacade movementFacade)
+        {
+            _fieldReader = fieldReader;
+            _movementFacade = movementFacade;
+        }
+
         public int VisionRange { get; set; }
         public char DisplayChar { get; set; }
         public int RunSpeed { get; set; }
-        
-        public int Wander(char[,] map)
+        public bool MoveMade { get; set; }
+
+        public virtual int Wander(char[,] map)
         {
-            var direction = _Rnd.Next(1, 5);
-            switch (direction)
-            {
-                case 1:
-                    if (map[VisionRange - 1, VisionRange] != '_')
-                    {
-                        direction = 0;
-                    }
-                    break;
-                case 2:
-                    if (map[VisionRange + 1, VisionRange] != char.Parse("_"))
-                    {
-                        direction = 0;
-                    }
-                    break;
-                case 3:
-                    if (map[VisionRange, VisionRange - 1] != char.Parse("_"))
-                    {
-                        direction = 0;
-                    }
-                    break;
-                case 4:
-                    if (map[VisionRange, VisionRange + 1] != char.Parse("_"))
-                    {
-                        direction = 0;
-                    }
-                    break;
-            }
+            var direction = Rnd.Next(1, 5);
             return direction;
         }
+
+        public abstract int SpecialMove(char[,] map);
 
         public int SpecialMove(char[,] map, char animalThatTrigers, bool hunt)
         {
@@ -157,20 +142,22 @@ namespace SavanaGame
             return direction;
         }
 
-        public void Rest()
+        public virtual void Rest()
         {
             
         }
         
-        public void Die()
+        public virtual void Die()
         {
 
         }
 
-        public void Eat()
+        public virtual void Eat()
         {
             
         }
+
+        public abstract bool LookAround(char[,] map);
 
         public bool LookAround(char[,] map, char animalThatTrigers)
         {
@@ -185,6 +172,70 @@ namespace SavanaGame
                 }
             }
             return false;
+        }
+
+        public void Think(int xPosition, int yPosition)
+        {
+            char[,] map = _fieldReader.GetMap(xPosition, yPosition, VisionRange);
+            bool SpecialActive = LookAround(map);
+            if (SpecialActive)
+            {
+                int runXPosition = xPosition;
+                int runYPosition = yPosition;
+                for (int i = 0; i < RunSpeed; i++)
+                {
+                    var direction = SpecialMove(map);
+                    _movementFacade.Move(direction, runXPosition, runYPosition);
+                    switch (direction)
+                    {
+                        case 1:
+                            runXPosition--;
+                            break;
+                        case 2:
+                            runXPosition++;
+                            break;
+                        case 3:
+                            runYPosition--;
+                            break;
+                        case 4:
+                            runYPosition++;
+                            break;
+                    }
+                    map = _fieldReader.GetMap(runXPosition, runYPosition, VisionRange);
+                }
+            }
+            else
+            {
+                var direction = Wander(map);
+                switch (direction)
+                {
+                    case 1:
+                        if (map[VisionRange - 1, VisionRange] != '_')
+                        {
+                            direction = 0;
+                        }
+                        break;
+                    case 2:
+                        if (map[VisionRange + 1, VisionRange] != char.Parse("_"))
+                        {
+                            direction = 0;
+                        }
+                        break;
+                    case 3:
+                        if (map[VisionRange, VisionRange - 1] != char.Parse("_"))
+                        {
+                            direction = 0;
+                        }
+                        break;
+                    case 4:
+                        if (map[VisionRange, VisionRange + 1] != char.Parse("_"))
+                        {
+                            direction = 0;
+                        }
+                        break;
+                }
+                _movementFacade.Move(direction, xPosition, yPosition);
+            }
         }
     }
 }

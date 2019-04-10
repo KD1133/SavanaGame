@@ -9,7 +9,7 @@ namespace SavanaGame
 {
     public class FieldReader : IFieldReader
     {
-        private IAnimal[,] _field { get; set; }
+        private readonly IAnimal[,] _field;
 
         public FieldReader(IAnimal[,] field)
         {

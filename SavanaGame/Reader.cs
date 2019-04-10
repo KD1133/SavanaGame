@@ -5,7 +5,7 @@ namespace SavanaGame
 
     class Reader : IReader
     {
-        private IConsoleFacade _consoleFacade { get; set; }
+        private readonly IConsoleFacade _consoleFacade;
 
         public Reader(IConsoleFacade consoleFacade)
         {
@@ -15,6 +15,11 @@ namespace SavanaGame
         public char ReadChar()
         {
             return _consoleFacade.ReadChar();
+        }
+
+        public bool KeyPresed()
+        {
+            return _consoleFacade.KeyPresed();
         }
     }
 }
