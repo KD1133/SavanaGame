@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAnimal.cs" />
-    <Compile Include="IAnimalBrain.cs" />
     <Compile Include="IAnimalFactory.cs" />
     <Compile Include="IAnimalIterator.cs" />
     <Compile Include="IAnimalMover.cs" />

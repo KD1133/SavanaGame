@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimalBrain.cs" />
     <Compile Include="AnimalFactory.cs" />
     <Compile Include="AnimalMover.cs" />
     <Compile Include="AnimalIterator.cs" />

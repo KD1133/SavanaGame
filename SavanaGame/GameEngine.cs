@@ -8,22 +8,24 @@ namespace SavanaGame
         private readonly IAnimalIterator _animalIterator;
         private readonly IReader _reader;
         private readonly IFieldChangesFacade _fieldChangesFacade;
+        private readonly IAnimalFactory _animalFactory;
         private static Random _Rnd = new Random();
 
         public GameEngine(
             IAnimalIterator animalIterator, 
             IReader reader,
-            IFieldChangesFacade fieldChangesFacade
+            IFieldChangesFacade fieldChangesFacade,
+            IAnimalFactory animalFactory 
             )
         {
             _animalIterator = animalIterator;
             _reader = reader;
             _fieldChangesFacade = fieldChangesFacade;
+            _animalFactory = animalFactory;
         }
         
         public void Run()
         {
-            System.Console.Read();
             do {
                 while (!_reader.KeyPresed())
                 {
@@ -45,7 +47,8 @@ namespace SavanaGame
                 }
                 if(animalType >= 0)
                 {
-                    _fieldChangesFacade.Add(animalType, xPosition, yPosition);
+                    IAnimal animal = _animalFactory.SpawnAnimal(animalType);
+                    _fieldChangesFacade.Add(animal, xPosition, yPosition);
                 }
             } while (true);
         }

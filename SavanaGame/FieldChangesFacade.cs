@@ -5,16 +5,17 @@ namespace SavanaGame
     public class FieldChangesFacade : IFieldChangesFacade
     {
         private readonly IAnimalMover _animalMover;
-        private readonly IAnimalFactory _animalFactory;
         private readonly IPrinter _printer;
         private readonly IFields _fields;
 
-        public FieldChangesFacade(IAnimalMover animalMover,IAnimalFactory animalFactory , IPrinter printer, IFields fields)
+        public FieldChangesFacade(IAnimalMover animalMover, 
+            IPrinter printer, 
+            IFields fields
+            )
         {
             _animalMover = animalMover;
             _printer = printer;
             _fields = fields;
-            _animalFactory = animalFactory;
         }
 
         public void Move(int direction, int xPosition, int yPosition)
@@ -23,9 +24,8 @@ namespace SavanaGame
             _animalMover.Move(direction, xPosition, yPosition);
         }
 
-        public void Add(int animalType, int xPosition, int yPosition)
+        public void Add(IAnimal animal, int xPosition, int yPosition)
         {
-            IAnimal animal = _animalFactory.SpawnAnimal(animalType);
             _animalMover.Add(animal, xPosition, yPosition);
             _printer.PrintAdd(animal, xPosition, yPosition);
         }

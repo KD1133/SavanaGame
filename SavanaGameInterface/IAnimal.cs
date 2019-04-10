@@ -13,5 +13,6 @@
         void Rest();
         void Die();
         void Eat();
+        void Think(int xPosition, int yPosition);
     }
 }

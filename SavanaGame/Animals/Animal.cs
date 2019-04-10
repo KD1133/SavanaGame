@@ -25,6 +25,10 @@ namespace SavanaGame
 
         public virtual int Wander(char[,] map)
         {
+            if(Rnd.Next(2) == 1)
+            {
+                return 0;
+            }
             var direction = Rnd.Next(1, 5);
             return direction;
         }

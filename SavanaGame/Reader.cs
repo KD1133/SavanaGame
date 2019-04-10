@@ -14,7 +14,14 @@ namespace SavanaGame
 
         public char ReadChar()
         {
-            return _consoleFacade.ReadChar();
+            try
+            {
+                return _consoleFacade.ReadChar();
+            }
+            catch
+            {
+                return ' ';
+            }
         }
 
         public bool KeyPresed()

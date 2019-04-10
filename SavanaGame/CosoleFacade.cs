@@ -16,14 +16,7 @@ namespace SavanaGame
 
         public char ReadChar()
         {
-            try
-            {
-                return char.Parse(Console.ReadKey(true).Key.ToString());
-            }
-            catch
-            {
-                return ' ';
-            }
+            return char.Parse(Console.ReadKey(true).Key.ToString());
         }
 
         public bool KeyPresed()

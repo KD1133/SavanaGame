@@ -5,15 +5,10 @@ namespace SavanaGame
     public class AnimalIterator : IAnimalIterator
     {
         private readonly IFields _fields;
-        private readonly IAnimalBrain _animalBrain;
 
-        public AnimalIterator(
-            IFields fields, 
-            IAnimalBrain animalBrain
-            )
+        public AnimalIterator(IFields fields)
         {
             _fields = fields;
-            _animalBrain = animalBrain;
         }
 
         public void Iterate()
@@ -25,7 +20,7 @@ namespace SavanaGame
                 {
                     if (_fields.Old[x,y] != null && _fields.Old[x, y].DisplayChar == 'A')
                     {
-                        _animalBrain.Think(_fields.Curent[x, y], x, y);
+                        _fields.Curent[x, y].Think(x, y);
                     }
                 }
             }
@@ -35,7 +30,7 @@ namespace SavanaGame
                 {
                     if (_fields.Old[x, y] != null && _fields.Old[x, y].DisplayChar == 'L')
                     {
-                        _animalBrain.Think(_fields.Curent[x, y], x, y);
+                        _fields.Curent[x, y].Think(x, y);
                     }
                 }
             }

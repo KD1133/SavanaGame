@@ -17,13 +17,12 @@ namespace SavanaGame
             IAnimal[,] field = new IAnimal[Width, Height];
             IAnimal[,] oldField = new IAnimal[Width, Height];
             IFields fields = new Fields(field, oldField);
-            IAnimalFactory animalFactory = new AnimalFactory();
             IAnimalMover animalMover = new AnimalMover(fields);
             IFieldReader fieldReader = new FieldReader(field);
-            IFieldChangesFacade fieldChangesFacade = new FieldChangesFacade(animalMover, animalFactory, printer, fields);
-            IAnimalBrain animalBrain = new AnimalBrain(fieldReader, fieldChangesFacade);
-            IAnimalIterator animalIterator = new AnimalIterator(fields, animalBrain);
-            GameEngine gameEngine = new GameEngine(animalIterator, reader, fieldChangesFacade);
+            IFieldChangesFacade fieldChangesFacade = new FieldChangesFacade(animalMover, printer, fields);
+            IAnimalFactory animalFactory = new AnimalFactory(fieldReader, fieldChangesFacade);
+            IAnimalIterator animalIterator = new AnimalIterator(fields);
+            GameEngine gameEngine = new GameEngine(animalIterator, reader, fieldChangesFacade, animalFactory);
             gameEngine.Run();
         }
     }
