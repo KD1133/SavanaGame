@@ -16,7 +16,7 @@ namespace SavanaGame
         {
             try
             {
-                return _consoleFacade.ReadChar();
+                return char.Parse(_consoleFacade.ReadChar().ToString());
             }
             catch
             {
@@ -26,7 +26,14 @@ namespace SavanaGame
 
         public bool KeyPresed()
         {
-            return _consoleFacade.KeyPresed();
+            if (_consoleFacade.KeyPresed())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

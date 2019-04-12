@@ -2,8 +2,6 @@
 
 namespace SavanaGame
 {
-    public enum Direction { Up, Down, Left, Right };
-
     public class Start
     {
         public static int Width = 60;
@@ -15,13 +13,11 @@ namespace SavanaGame
             IPrinter printer = new Printer(consoleFacade);
             IReader reader = new Reader(consoleFacade);
             IAnimal[,] field = new IAnimal[Width, Height];
-            IAnimal[,] oldField = new IAnimal[Width, Height];
-            IFields fields = new Fields(field, oldField);
-            IAnimalMover animalMover = new AnimalMover(fields);
-            IFieldReader fieldReader = new FieldReader(field);
-            IFieldChangesFacade fieldChangesFacade = new FieldChangesFacade(animalMover, printer, fields);
+            IAnimalMover animalMover = new AnimalMover(field);
+            IFieldVision fieldReader = new FieldVision(field);
+            IFieldChangesFacade fieldChangesFacade = new FieldChangesFacade(animalMover, printer, field);
             IAnimalFactory animalFactory = new AnimalFactory(fieldReader, fieldChangesFacade);
-            IAnimalIterator animalIterator = new AnimalIterator(fields);
+            IAnimalIterator animalIterator = new AnimalIterator(field);
             GameEngine gameEngine = new GameEngine(animalIterator, reader, fieldChangesFacade, animalFactory);
             gameEngine.Run();
         }

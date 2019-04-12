@@ -2,11 +2,11 @@
 
 namespace SavanaGame
 {
-    public class FieldReader : IFieldReader
+    public class FieldVision : IFieldVision
     {
         private readonly IAnimal[,] _field;
 
-        public FieldReader(IAnimal[,] field)
+        public FieldVision(IAnimal[,] field)
         {
             _field = field;
         }

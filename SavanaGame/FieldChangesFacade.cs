@@ -1,4 +1,5 @@
 ﻿using SavanaGameInterface;
+using static Enums.Enums;
 
 namespace SavanaGame
 {
@@ -6,21 +7,22 @@ namespace SavanaGame
     {
         private readonly IAnimalMover _animalMover;
         private readonly IPrinter _printer;
-        private readonly IFields _fields;
+
+        private IAnimal[,] field { get; set; }
 
         public FieldChangesFacade(IAnimalMover animalMover, 
-            IPrinter printer, 
-            IFields fields
+            IPrinter printer,
+            IAnimal[,] field
             )
         {
             _animalMover = animalMover;
             _printer = printer;
-            _fields = fields;
+            this.field = field;
         }
 
-        public void Move(int direction, int xPosition, int yPosition)
+        public void Move(Direction direction, int xPosition, int yPosition)
         {
-            _printer.PrintMove(direction, xPosition, yPosition, _fields.Curent[xPosition, yPosition]);
+            _printer.PrintMove(direction, xPosition, yPosition, field[xPosition, yPosition]);
             _animalMover.Move(direction, xPosition, yPosition);
         }
 

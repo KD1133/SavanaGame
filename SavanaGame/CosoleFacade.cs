@@ -14,21 +14,14 @@ namespace SavanaGame
             Console.Write(strToWrite);
         }
 
-        public char ReadChar()
+        public ConsoleKey ReadChar()
         {
-            return char.Parse(Console.ReadKey(true).Key.ToString());
+            return Console.ReadKey(true).Key;
         }
 
         public bool KeyPresed()
         {
-            if (Console.KeyAvailable)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Console.KeyAvailable;
         }
     }
 }

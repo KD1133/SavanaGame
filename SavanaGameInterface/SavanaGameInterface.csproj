@@ -46,12 +46,17 @@
     <Compile Include="IAnimalIterator.cs" />
     <Compile Include="IAnimalMover.cs" />
     <Compile Include="IConsoleFacade.cs" />
-    <Compile Include="IFieldReader.cs" />
-    <Compile Include="IFields.cs" />
+    <Compile Include="IFieldVision.cs" />
     <Compile Include="IFieldChangesFacade.cs" />
     <Compile Include="IPrinter.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enums\Enums.csproj">
+      <Project>{fde532c1-104f-4845-87c5-e435a660e587}</Project>
+      <Name>Enums</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

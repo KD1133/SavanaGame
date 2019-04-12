@@ -1,5 +1,6 @@
 ﻿using SavanaGameInterface;
 using System;
+using static Enums.Enums;
 
 namespace SavanaGame
 {
@@ -8,11 +9,11 @@ namespace SavanaGame
 
     public abstract class Animal
     {
-        protected readonly IFieldReader _fieldReader;
+        protected readonly IFieldVision _fieldReader;
         protected readonly IFieldChangesFacade _movementFacade;
         protected static Random Rnd = new Random();
 
-        protected Animal(IFieldReader fieldReader, IFieldChangesFacade movementFacade)
+        protected Animal(IFieldVision fieldReader, IFieldChangesFacade movementFacade)
         {
             _fieldReader = fieldReader;
             _movementFacade = movementFacade;
@@ -21,76 +22,81 @@ namespace SavanaGame
         public int VisionRange { get; set; }
         public char DisplayChar { get; set; }
         public int RunSpeed { get; set; }
-        public bool MoveMade { get; set; }
+        public bool IsHunter { get; set; }
+        public char SpecialTrigerAnimal { get; set; }
+        public char MoveTargetAnimal { get; set; }
+        protected char[,] VisionMap { get; set; }
+        protected int TimeToRest { get; set; }
+        protected int DangerDirection { get; set; }
 
-        public virtual int Wander(char[,] map)
+
+        public virtual Direction Wander()
         {
             if(Rnd.Next(2) == 1)
             {
                 return 0;
             }
-            var direction = Rnd.Next(1, 5);
+            int rnd = Rnd.Next(1, 5);
+            Direction direction = (Direction)Enum.Parse(typeof(Direction), rnd.ToString());
             return direction;
         }
 
-        public abstract int SpecialMove(char[,] map);
-
-        public int SpecialMove(char[,] map, char animalThatTrigers, bool hunt)
+        public Direction SpecialMove()
         {
-            int direction = 0;
+            Direction direction = Direction.None;
             for(int i = 1; i <= VisionRange; i++)
             {
                 for(int j = 0; j <= ((i * 2)); j++)
                 {
                     // target right
-                    if (map[VisionRange + i, VisionRange - i + j] == animalThatTrigers)
+                    if (VisionMap[VisionRange + i, VisionRange - i + j] == MoveTargetAnimal)
                     {
-                        if (hunt)
+                        if (IsHunter)
                         {
-                            direction = 2;
+                            direction = Direction.Right;
                         }
                         else
                         {
-                            direction = 1;
+                            direction = Direction.Left;
                         }
                         break;
                     }
                     //target left
-                    if (map[VisionRange - i, VisionRange - i + j] == animalThatTrigers)
+                    if (VisionMap[VisionRange - i, VisionRange - i + j] == MoveTargetAnimal)
                     {
-                        if (hunt)
+                        if (IsHunter)
                         {
-                            direction = 1;
+                            direction = Direction.Left;
                         }
                         else
                         {
-                            direction = 2;
+                            direction = Direction.Right;
                         }
                         break;
                     } 
                     //target below
-                    if (map[VisionRange - i + j, VisionRange + i] == animalThatTrigers)
+                    if (VisionMap[VisionRange - i + j, VisionRange + i] == MoveTargetAnimal)
                     {
-                        if (hunt)
+                        if (IsHunter)
                         {
-                            direction = 4;
+                            direction = Direction.Down;
                         }
                         else
                         {
-                            direction = 3;
+                            direction = Direction.Up;
                         }
                         break;
                     }
                     //target above
-                    if (map[VisionRange - i + j, VisionRange - i] == animalThatTrigers)
+                    if (VisionMap[VisionRange - i + j, VisionRange - i] == MoveTargetAnimal)
                     {
-                        if (hunt)
+                        if (IsHunter)
                         {
-                            direction = 3;
+                            direction = Direction.Up;
                         }
                         else
                         {
-                            direction = 4;
+                            direction = Direction.Down;
                         }
                         break;
                     }
@@ -102,44 +108,44 @@ namespace SavanaGame
             }
             switch (direction)
             {
-                case 1:
-                    if (map[VisionRange - 1, VisionRange] == animalThatTrigers && hunt == true)
+                case Direction.Left:
+                    if (VisionMap[VisionRange - 1, VisionRange] == MoveTargetAnimal && IsHunter == true)
                     {
                         this.Eat();
                     }
-                    else if (map[VisionRange - 1, VisionRange] != char.Parse("_"))
+                    else if (VisionMap[VisionRange - 1, VisionRange] != char.Parse("_"))
                     {
-                        direction = 0;
+                        direction = Direction.None;
                     }
                     break;
-                case 2:
-                    if (map[VisionRange + 1, VisionRange] == animalThatTrigers && hunt == true)
+                case Direction.Right:
+                    if (VisionMap[VisionRange + 1, VisionRange] == MoveTargetAnimal && IsHunter == true)
                     {
                         this.Eat();
                     }
-                    else if (map[VisionRange + 1, VisionRange] != char.Parse("_"))
+                    else if (VisionMap[VisionRange + 1, VisionRange] != char.Parse("_"))
                     {
-                        direction = 0;
+                        direction = Direction.None;
                     }
                     break;
-                case 3:
-                    if (map[VisionRange, VisionRange - 1] == animalThatTrigers && hunt == true)
+                case Direction.Up:
+                    if (VisionMap[VisionRange, VisionRange - 1] == MoveTargetAnimal && IsHunter == true)
                     {
                         this.Eat();
                     }
-                    else if (map[VisionRange, VisionRange - 1] != char.Parse("_"))
+                    else if (VisionMap[VisionRange, VisionRange - 1] != char.Parse("_"))
                     {
-                        direction = 0;
+                        direction = Direction.None;
                     }
                     break;
-                case 4:
-                    if (map[VisionRange, VisionRange + 1] == animalThatTrigers && hunt == true)
+                case Direction.Down:
+                    if (VisionMap[VisionRange, VisionRange + 1] == MoveTargetAnimal && IsHunter == true)
                     {
                         this.Eat();
                     }
-                    else if (map[VisionRange, VisionRange + 1] != char.Parse("_"))
+                    else if (VisionMap[VisionRange, VisionRange + 1] != char.Parse("_"))
                     {
-                        direction = 0;
+                        direction = Direction.None;
                     }
                     break;
             }
@@ -148,7 +154,10 @@ namespace SavanaGame
 
         public virtual void Rest()
         {
-            
+            if(TimeToRest > 0)
+            {
+                TimeToRest--;
+            }
         }
         
         public virtual void Die()
@@ -158,18 +167,16 @@ namespace SavanaGame
 
         public virtual void Eat()
         {
-            
+            TimeToRest = 10;
         }
 
-        public abstract bool LookAround(char[,] map);
-
-        public bool LookAround(char[,] map, char animalThatTrigers)
+        public bool LookAround()
         {
-            for (int x = 0; x < map.GetLength(0); x++)
+            for (int x = 0; x < VisionMap.GetLength(0); x++)
             {
-                for (int y = 0; y < map.GetLength(1); y++)
+                for (int y = 0; y < VisionMap.GetLength(1); y++)
                 {
-                    if(map[x,y] == animalThatTrigers)
+                    if(VisionMap[x,y] == SpecialTrigerAnimal)
                     {
                         return true;
                     }
@@ -178,65 +185,79 @@ namespace SavanaGame
             return false;
         }
 
+        protected bool ValidateMove(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Left:
+                    if (VisionMap[VisionRange - 1, VisionRange] != '_')
+                    {
+                        return false;
+                    }
+                    break;
+                case Direction.Right:
+                    if (VisionMap[VisionRange + 1, VisionRange] != char.Parse("_"))
+                    {
+                        return false;
+                    }
+                    break;
+                case Direction.Up:
+                    if (VisionMap[VisionRange, VisionRange - 1] != char.Parse("_"))
+                    {
+                        return false;
+                    }
+                    break;
+                case Direction.Down:
+                    if (VisionMap[VisionRange, VisionRange + 1] != char.Parse("_"))
+                    {
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        }
+
         public void Think(int xPosition, int yPosition)
         {
-            char[,] map = _fieldReader.GetMap(xPosition, yPosition, VisionRange);
-            bool SpecialActive = LookAround(map);
+            if(TimeToRest > 0)
+            {
+                Rest();
+                return; //if animal needs to rest rest and do nothing;
+            }
+            VisionMap = _fieldReader.GetMap(xPosition, yPosition, VisionRange);
+            bool SpecialActive = LookAround();
             if (SpecialActive)
             {
                 int runXPosition = xPosition;
                 int runYPosition = yPosition;
                 for (int i = 0; i < RunSpeed; i++)
                 {
-                    var direction = SpecialMove(map);
+                    var direction = SpecialMove();
                     _movementFacade.Move(direction, runXPosition, runYPosition);
                     switch (direction)
                     {
-                        case 1:
+                        case Direction.Left:
                             runXPosition--;
                             break;
-                        case 2:
+                        case Direction.Right:
                             runXPosition++;
                             break;
-                        case 3:
+                        case Direction.Up:
                             runYPosition--;
                             break;
-                        case 4:
+                        case Direction.Down:
                             runYPosition++;
                             break;
                     }
-                    map = _fieldReader.GetMap(runXPosition, runYPosition, VisionRange);
+                    VisionMap = _fieldReader.GetMap(runXPosition, runYPosition, VisionRange);
                 }
             }
             else
             {
-                var direction = Wander(map);
-                switch (direction)
+                var direction = Wander();
+                if (!ValidateMove(direction))
                 {
-                    case 1:
-                        if (map[VisionRange - 1, VisionRange] != '_')
-                        {
-                            direction = 0;
-                        }
-                        break;
-                    case 2:
-                        if (map[VisionRange + 1, VisionRange] != char.Parse("_"))
-                        {
-                            direction = 0;
-                        }
-                        break;
-                    case 3:
-                        if (map[VisionRange, VisionRange - 1] != char.Parse("_"))
-                        {
-                            direction = 0;
-                        }
-                        break;
-                    case 4:
-                        if (map[VisionRange, VisionRange + 1] != char.Parse("_"))
-                        {
-                            direction = 0;
-                        }
-                        break;
+                    direction = Direction.None;
                 }
                 _movementFacade.Move(direction, xPosition, yPosition);
             }

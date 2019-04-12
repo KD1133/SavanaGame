@@ -4,33 +4,33 @@ namespace SavanaGame
 {
     public class AnimalIterator : IAnimalIterator
     {
-        private readonly IFields _fields;
+        private IAnimal[,] field { get; set; }
 
-        public AnimalIterator(IFields fields)
+        public AnimalIterator(IAnimal[,] field)
         {
-            _fields = fields;
+            this.field = field;
         }
 
         public void Iterate()
         {
-            _fields.Old = _fields.Curent.Clone() as IAnimal[,];
-            for(int x = 0; x < _fields.Curent.GetLength(0); x++)
+            var oldField = field.Clone() as IAnimal[,];
+            for(int x = 0; x < field.GetLength(0); x++)
             {
-                for (int y = 0; y < _fields.Curent.GetLength(1); y++)
+                for (int y = 0; y < field.GetLength(1); y++)
                 {
-                    if (_fields.Old[x,y] != null && _fields.Old[x, y].DisplayChar == 'A')
+                    if (oldField[x,y] != null && oldField[x, y].DisplayChar == 'A')
                     {
-                        _fields.Curent[x, y].Think(x, y);
+                        field[x, y].Think(x, y);
                     }
                 }
             }
-            for (int x = 0; x < _fields.Curent.GetLength(0); x++)
+            for (int x = 0; x < field.GetLength(0); x++)
             {
-                for (int y = 0; y < _fields.Curent.GetLength(1); y++)
+                for (int y = 0; y < field.GetLength(1); y++)
                 {
-                    if (_fields.Old[x, y] != null && _fields.Old[x, y].DisplayChar == 'L')
+                    if (oldField[x, y] != null && oldField[x, y].DisplayChar == 'L')
                     {
-                        _fields.Curent[x, y].Think(x, y);
+                        field[x, y].Think(x, y);
                     }
                 }
             }

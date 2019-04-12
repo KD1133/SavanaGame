@@ -1,10 +1,12 @@
-﻿namespace SavanaGameInterface
+﻿using System;
+
+namespace SavanaGameInterface
 {
     public interface IConsoleFacade
     {
         void SetCursorPosition(int xPosition, int yPosition);
         void Write(string strToWrite);
-        char ReadChar();
+        ConsoleKey ReadChar();
         bool KeyPresed();
     }
 }

@@ -5,10 +5,10 @@ namespace SavanaGame
 {
     class AnimalFactory : IAnimalFactory
     {
-        protected readonly IFieldReader _fieldReader;
+        protected readonly IFieldVision _fieldReader;
         protected readonly IFieldChangesFacade _movementFacade;
 
-        public AnimalFactory(IFieldReader fieldReader, IFieldChangesFacade movementFacade)
+        public AnimalFactory(IFieldVision fieldReader, IFieldChangesFacade movementFacade)
         {
             _fieldReader = fieldReader;
             _movementFacade = movementFacade;

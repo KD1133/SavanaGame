@@ -8,3 +8,5 @@ C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\SavanaGameIn
 C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.csproj.CopyComplete
 C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.exe
 C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\obj\Debug\SavanaGame.pdb
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\Enums.dll
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGame\bin\Debug\Enums.pdb

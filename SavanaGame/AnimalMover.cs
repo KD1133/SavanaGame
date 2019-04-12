@@ -1,4 +1,4 @@
-﻿using SavanaGameInterface;
+﻿using static Enums.Enums;
 
 namespace SavanaGame
 {
@@ -6,43 +6,44 @@ namespace SavanaGame
 
     public class AnimalMover : IAnimalMover
     {
-        private readonly IFields _fields;
-        
-        public AnimalMover(IFields fields)
+
+        private IAnimal[,] field { get; set; }
+
+        public AnimalMover(IAnimal[,] field)
         {
-            _fields = fields;
+            this.field = field;
         }
 
-        public void Move(int direction, int xPosition, int yPosition)
+        public void Move(Direction direction, int xPosition, int yPosition)
         {
             switch (direction)
             {
-                case 1:
-                    _fields.Curent[xPosition - 1, yPosition] = _fields.Curent[xPosition, yPosition];
+                case Direction.Left:
+                    field[xPosition - 1, yPosition] = field[xPosition, yPosition];
                     break;
-                case 2:
-                    _fields.Curent[xPosition + 1, yPosition] = _fields.Curent[xPosition, yPosition];
+                case Direction.Right:
+                    field[xPosition + 1, yPosition] = field[xPosition, yPosition];
                     break;
-                case 3:
-                    _fields.Curent[xPosition, yPosition - 1] = _fields.Curent[xPosition, yPosition];
+                case Direction.Up:
+                    field[xPosition, yPosition - 1] = field[xPosition, yPosition];
                     break;
-                case 4:
-                    _fields.Curent[xPosition, yPosition + 1] = _fields.Curent[xPosition, yPosition];
+                case Direction.Down:
+                    field[xPosition, yPosition + 1] = field[xPosition, yPosition];
                     break;
                 default:
                     return;
             }
-            _fields.Curent[xPosition, yPosition] = null;
+             field[xPosition, yPosition] = null;
         }
 
         public void Add(IAnimal animal, int xPosition, int yPosition)
         {
-            _fields.Curent[xPosition, yPosition] = animal;
+            field[xPosition, yPosition] = animal;
         }
 
         public void Remove(int xPosition, int yPosition)
         {
-            _fields.Curent[xPosition, yPosition] = null;
+            field[xPosition, yPosition] = null;
         }
     }
 }

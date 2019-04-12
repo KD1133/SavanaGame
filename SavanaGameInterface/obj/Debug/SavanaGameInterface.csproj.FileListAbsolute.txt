@@ -4,3 +4,6 @@ C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\obj\Debug\Sav
 C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\obj\Debug\SavanaGameInterface.csproj.CoreCompileInputs.cache
 C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\obj\Debug\SavanaGameInterface.dll
 C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\obj\Debug\SavanaGameInterface.pdb
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\bin\Debug\Enums.dll
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\bin\Debug\Enums.pdb
+C:\Users\karlis.dreska\source\repos\SavanaGame\SavanaGameInterface\obj\Debug\SavanaGameInterface.csproj.CopyComplete

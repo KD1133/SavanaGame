@@ -2,7 +2,7 @@
 
 namespace SavanaGameInterface
 {
-    public interface IFieldReader
+    public interface IFieldVision
     {
         IAnimal ReadCell(int xPosition, int yPosition);
 

@@ -1,5 +1,6 @@
 ﻿using SavanaGameInterface;
 using System;
+using static Enums.Enums;
 
 namespace SavanaGame
 {
@@ -46,24 +47,24 @@ namespace SavanaGame
             _consoleFacade.Write(animal.DisplayChar.ToString());
         }
         
-        public void PrintMove(int direction, int xPosition, int yPosition, IAnimal animal)
+        public void PrintMove(Direction direction, int xPosition, int yPosition, IAnimal animal)
         {
             _consoleFacade.SetCursorPosition(xPosition + xOffSet, yPosition + yOffSet);
             switch (direction)
             {
-                case 1:
+                case Direction.Left:
                     _consoleFacade.Write(" ");
                     _consoleFacade.SetCursorPosition(xPosition - 1 + xOffSet, yPosition + yOffSet);
                     break;
-                case 2:
+                case Direction.Right:
                     _consoleFacade.Write(" ");
                     _consoleFacade.SetCursorPosition(xPosition + 1 + xOffSet, yPosition + yOffSet);
                     break;
-                case 3:
+                case Direction.Up:
                     _consoleFacade.Write(" ");
                     _consoleFacade.SetCursorPosition(xPosition + xOffSet, yPosition - 1 + yOffSet);
                     break;
-                case 4:
+                case Direction.Down:
                     _consoleFacade.Write(" ");
                     _consoleFacade.SetCursorPosition(xPosition + xOffSet, yPosition + 1 + yOffSet);
                     break;

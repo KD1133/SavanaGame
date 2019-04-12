@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AF4C80C6-FBE7-43E0-989F-81F6B002D8D8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>SavanaGame</RootNamespace>
-    <AssemblyName>SavanaGame</AssemblyName>
+    <ProjectGuid>{FDE532C1-104F-4845-87C5-E435A660E587}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Enums</RootNamespace>
+    <AssemblyName>Enums</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,34 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimalFactory.cs" />
-    <Compile Include="AnimalMover.cs" />
-    <Compile Include="AnimalIterator.cs" />
-    <Compile Include="Animals\Animal.cs" />
-    <Compile Include="Animals\Antelope.cs" />
-    <Compile Include="Animals\Lion.cs" />
-    <Compile Include="CosoleFacade.cs" />
-    <Compile Include="FieldVision.cs" />
-    <Compile Include="GameEngine.cs" />
-    <Compile Include="FieldChangesFacade.cs" />
-    <Compile Include="Printer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reader.cs" />
-    <Compile Include="Start.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Enums\Enums.csproj">
-      <Project>{fde532c1-104f-4845-87c5-e435a660e587}</Project>
-      <Name>Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SavanaGameInterface\SavanaGameInterface.csproj">
-      <Project>{764ca6a6-0b86-4e93-8c86-1aa8593bdd4e}</Project>
-      <Name>SavanaGameInterface</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
