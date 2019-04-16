@@ -13,170 +13,90 @@ namespace SavanaGame
         protected readonly IFieldChangesFacade _movementFacade;
         protected static Random Rnd = new Random();
 
-        protected Animal(IFieldVision fieldReader, IFieldChangesFacade movementFacade)
+        protected Animal(IAnimalParams animalParams, IFieldVision fieldReader, IFieldChangesFacade movementFacade)
         {
+            AnimalParams = animalParams; 
             _fieldReader = fieldReader;
             _movementFacade = movementFacade;
+            maxHealth = AnimalParams.Health;
         }
 
-        public int VisionRange { get; set; }
-        public char DisplayChar { get; set; }
-        public int RunSpeed { get; set; }
-        public bool IsHunter { get; set; }
-        public char SpecialTrigerAnimal { get; set; }
-        public char MoveTargetAnimal { get; set; }
+        protected int maxHealth { get; set; }
+        public IAnimalParams AnimalParams { get; set; }
+        public Direction WanderDirection { get; set; }
         protected char[,] VisionMap { get; set; }
         protected int TimeToRest { get; set; }
-        protected int DangerDirection { get; set; }
+        public Direction SpecialMoveDirection { get; set; }
 
 
-        public virtual Direction Wander()
+        public virtual void Wander(int xPosition, int yPosition)
         {
-            if(Rnd.Next(2) == 1)
+            int rnd = Rnd.Next(1, AnimalParams.AvarageDiretionDistance);
+            if (rnd == 1)
             {
-                return 0;
-            }
-            int rnd = Rnd.Next(1, 5);
-            Direction direction = (Direction)Enum.Parse(typeof(Direction), rnd.ToString());
-            return direction;
-        }
-
-        public Direction SpecialMove()
-        {
-            Direction direction = Direction.None;
-            for(int i = 1; i <= VisionRange; i++)
-            {
-                for(int j = 0; j <= ((i * 2)); j++)
+                rnd = Rnd.Next(1, 5 + AnimalParams.WanderRestChance);
+                switch (rnd)
                 {
-                    // target right
-                    if (VisionMap[VisionRange + i, VisionRange - i + j] == MoveTargetAnimal)
-                    {
-                        if (IsHunter)
-                        {
-                            direction = Direction.Right;
-                        }
-                        else
-                        {
-                            direction = Direction.Left;
-                        }
+                    case 1:
+                        WanderDirection = Direction.Left;
                         break;
-                    }
-                    //target left
-                    if (VisionMap[VisionRange - i, VisionRange - i + j] == MoveTargetAnimal)
-                    {
-                        if (IsHunter)
-                        {
-                            direction = Direction.Left;
-                        }
-                        else
-                        {
-                            direction = Direction.Right;
-                        }
+                    case 2:
+                        WanderDirection = Direction.Right;
                         break;
-                    } 
-                    //target below
-                    if (VisionMap[VisionRange - i + j, VisionRange + i] == MoveTargetAnimal)
-                    {
-                        if (IsHunter)
-                        {
-                            direction = Direction.Down;
-                        }
-                        else
-                        {
-                            direction = Direction.Up;
-                        }
+                    case 3:
+                        WanderDirection = Direction.Up;
                         break;
-                    }
-                    //target above
-                    if (VisionMap[VisionRange - i + j, VisionRange - i] == MoveTargetAnimal)
-                    {
-                        if (IsHunter)
-                        {
-                            direction = Direction.Up;
-                        }
-                        else
-                        {
-                            direction = Direction.Down;
-                        }
+                    case 4:
+                        WanderDirection = Direction.Down;
                         break;
-                    }
+                    default:
+                        WanderDirection = 0;
+                        break;
+
                 }
-                if (direction != 0)
+
+            }
+            if (!ValidateMove(WanderDirection))
+            {
+                switch (WanderDirection)
                 {
-                    break;
+                    case Direction.Right:
+                        WanderDirection = Direction.Left;
+                        break;
+                    case Direction.Left:
+                        WanderDirection = Direction.Right;
+                        break;
+                    case Direction.Up:
+                        WanderDirection = Direction.Down;
+                        break;
+                    case Direction.Down:
+                        WanderDirection = Direction.Up;
+                        break;
                 }
             }
-            switch (direction)
+            if (!ValidateMove(WanderDirection))
             {
-                case Direction.Left:
-                    if (VisionMap[VisionRange - 1, VisionRange] == MoveTargetAnimal && IsHunter == true)
-                    {
-                        this.Eat();
-                    }
-                    else if (VisionMap[VisionRange - 1, VisionRange] != char.Parse("_"))
-                    {
-                        direction = Direction.None;
-                    }
-                    break;
-                case Direction.Right:
-                    if (VisionMap[VisionRange + 1, VisionRange] == MoveTargetAnimal && IsHunter == true)
-                    {
-                        this.Eat();
-                    }
-                    else if (VisionMap[VisionRange + 1, VisionRange] != char.Parse("_"))
-                    {
-                        direction = Direction.None;
-                    }
-                    break;
-                case Direction.Up:
-                    if (VisionMap[VisionRange, VisionRange - 1] == MoveTargetAnimal && IsHunter == true)
-                    {
-                        this.Eat();
-                    }
-                    else if (VisionMap[VisionRange, VisionRange - 1] != char.Parse("_"))
-                    {
-                        direction = Direction.None;
-                    }
-                    break;
-                case Direction.Down:
-                    if (VisionMap[VisionRange, VisionRange + 1] == MoveTargetAnimal && IsHunter == true)
-                    {
-                        this.Eat();
-                    }
-                    else if (VisionMap[VisionRange, VisionRange + 1] != char.Parse("_"))
-                    {
-                        direction = Direction.None;
-                    }
-                    break;
+                WanderDirection = Direction.None;
             }
-            return direction;
+
+            int healthPrecent = (int)Math.Round((double)(100 * AnimalParams.Health) / maxHealth);
+            _movementFacade.Move(WanderDirection, xPosition, yPosition, healthPrecent);
         }
 
-        public virtual void Rest()
-        {
-            if(TimeToRest > 0)
-            {
-                TimeToRest--;
-            }
-        }
+        public abstract Direction SpecialMove(int xPosition, int yPosition);
         
-        public virtual void Die()
-        {
-
-        }
-
-        public virtual void Eat()
-        {
-            TimeToRest = 10;
-        }
-
         public bool LookAround()
         {
+            char trigerAnimal = 'C';
+            if (AnimalParams.IsHunter == true)
+            {
+                trigerAnimal = 'H';
+            }
             for (int x = 0; x < VisionMap.GetLength(0); x++)
             {
                 for (int y = 0; y < VisionMap.GetLength(1); y++)
                 {
-                    if(VisionMap[x,y] == SpecialTrigerAnimal)
+                    if(VisionMap[x,y] == trigerAnimal)
                     {
                         return true;
                     }
@@ -190,25 +110,25 @@ namespace SavanaGame
             switch (direction)
             {
                 case Direction.Left:
-                    if (VisionMap[VisionRange - 1, VisionRange] != '_')
+                    if (VisionMap[AnimalParams.VisionRange - 1, AnimalParams.VisionRange] != '_')
                     {
                         return false;
                     }
                     break;
                 case Direction.Right:
-                    if (VisionMap[VisionRange + 1, VisionRange] != char.Parse("_"))
+                    if (VisionMap[AnimalParams.VisionRange + 1, AnimalParams.VisionRange] != '_')
                     {
                         return false;
                     }
                     break;
                 case Direction.Up:
-                    if (VisionMap[VisionRange, VisionRange - 1] != char.Parse("_"))
+                    if (VisionMap[AnimalParams.VisionRange, AnimalParams.VisionRange - 1] != '_')
                     {
                         return false;
                     }
                     break;
                 case Direction.Down:
-                    if (VisionMap[VisionRange, VisionRange + 1] != char.Parse("_"))
+                    if (VisionMap[AnimalParams.VisionRange, AnimalParams.VisionRange + 1] != '_')
                     {
                         return false;
                     }
@@ -217,23 +137,52 @@ namespace SavanaGame
             return true;
         }
 
+        public virtual void Rest()
+        {
+            AnimalParams.Health = AnimalParams.Health + 1;
+            if (TimeToRest > 0)
+            {
+                TimeToRest--;
+            }
+        }
+
+        public virtual void Die(int xPosition, int yPosition)
+        {
+            _movementFacade.Remove(xPosition, yPosition);
+        }
+
+        public virtual void Eat()
+        {
+            AnimalParams.Health = AnimalParams.Health + 100;
+            if (AnimalParams.Health > maxHealth)
+            {
+                AnimalParams.Health = maxHealth;
+            }
+            TimeToRest = 10;
+        }
+
         public void Think(int xPosition, int yPosition)
         {
-            if(TimeToRest > 0)
+            AnimalParams.Health = AnimalParams.Health - 1;
+            if (AnimalParams.Health <= 0)
+            {
+                Die(xPosition, yPosition);
+                return; //if animal died, die and do nothing;
+            }
+            if (TimeToRest > 0)
             {
                 Rest();
-                return; //if animal needs to rest rest and do nothing;
+                return; //if animal needs to rest, rest and do nothing;
             }
-            VisionMap = _fieldReader.GetMap(xPosition, yPosition, VisionRange);
+            VisionMap = _fieldReader.GetMap(xPosition, yPosition, AnimalParams.VisionRange);
             bool SpecialActive = LookAround();
             if (SpecialActive)
             {
                 int runXPosition = xPosition;
                 int runYPosition = yPosition;
-                for (int i = 0; i < RunSpeed; i++)
+                for (int i = 0; i < AnimalParams.RunSpeed && TimeToRest <= 0 ; i++)
                 {
-                    var direction = SpecialMove();
-                    _movementFacade.Move(direction, runXPosition, runYPosition);
+                    Direction direction = SpecialMove(runXPosition, runYPosition);
                     switch (direction)
                     {
                         case Direction.Left:
@@ -249,17 +198,12 @@ namespace SavanaGame
                             runYPosition++;
                             break;
                     }
-                    VisionMap = _fieldReader.GetMap(runXPosition, runYPosition, VisionRange);
+                    VisionMap = _fieldReader.GetMap(runXPosition, runYPosition, AnimalParams.VisionRange);
                 }
             }
             else
             {
-                var direction = Wander();
-                if (!ValidateMove(direction))
-                {
-                    direction = Direction.None;
-                }
-                _movementFacade.Move(direction, xPosition, yPosition);
+                Wander(xPosition,yPosition);
             }
         }
     }

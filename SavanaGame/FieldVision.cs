@@ -42,7 +42,14 @@ namespace SavanaGame
                     var animal = ReadCell(x, y);
                     if(animal != null)
                     {
-                        map[i, j] = animal.DisplayChar;
+                        if (animal.AnimalParams.IsHunter)
+                        {
+                            map[i, j] = 'C';
+                        }
+                        else
+                        {
+                            map[i, j] = 'H';
+                        }
                     }
                     else
                     {

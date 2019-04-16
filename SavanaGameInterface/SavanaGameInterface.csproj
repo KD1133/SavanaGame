@@ -45,6 +45,7 @@
     <Compile Include="IAnimalFactory.cs" />
     <Compile Include="IAnimalIterator.cs" />
     <Compile Include="IAnimalMover.cs" />
+    <Compile Include="IAnimalParams.cs" />
     <Compile Include="IConsoleFacade.cs" />
     <Compile Include="IFieldVision.cs" />
     <Compile Include="IFieldChangesFacade.cs" />

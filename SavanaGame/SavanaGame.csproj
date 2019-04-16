@@ -48,7 +48,10 @@
     <Compile Include="AnimalIterator.cs" />
     <Compile Include="Animals\Animal.cs" />
     <Compile Include="Animals\Antelope.cs" />
+    <Compile Include="Animals\Carnivore.cs" />
+    <Compile Include="Animals\Herbavore.cs" />
     <Compile Include="Animals\Lion.cs" />
+    <Compile Include="Animals\Woof.cs" />
     <Compile Include="CosoleFacade.cs" />
     <Compile Include="FieldVision.cs" />
     <Compile Include="GameEngine.cs" />

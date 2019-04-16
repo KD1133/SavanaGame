@@ -23,5 +23,10 @@ namespace SavanaGame
         {
             return Console.KeyAvailable;
         }
+
+        public void SetForegroundColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
     }
 }

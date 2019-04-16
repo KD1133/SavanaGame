@@ -20,9 +20,9 @@ namespace SavanaGame
             this.field = field;
         }
 
-        public void Move(Direction direction, int xPosition, int yPosition)
+        public void Move(Direction direction, int xPosition, int yPosition, int healthPrecent)
         {
-            _printer.PrintMove(direction, xPosition, yPosition, field[xPosition, yPosition]);
+            _printer.PrintMove(direction, xPosition, yPosition, field[xPosition, yPosition], healthPrecent);
             _animalMover.Move(direction, xPosition, yPosition);
         }
 

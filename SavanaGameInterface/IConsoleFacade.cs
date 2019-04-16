@@ -8,5 +8,6 @@ namespace SavanaGameInterface
         void Write(string strToWrite);
         ConsoleKey ReadChar();
         bool KeyPresed();
+        void SetForegroundColor(ConsoleColor color);
     }
 }

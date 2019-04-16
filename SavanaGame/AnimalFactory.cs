@@ -20,10 +20,10 @@ namespace SavanaGame
             switch (animalId)
             {
                 case 0:
-                    animal = new Antelope(_fieldReader, _movementFacade);
+                    animal = new Herbavore(new Antelope(), _fieldReader, _movementFacade);
                     break;
                 case 1:
-                    animal = new Lion(_fieldReader, _movementFacade);
+                    animal = new Carnivore(new Lion(), _fieldReader, _movementFacade);
                     break;
             }
             return animal;

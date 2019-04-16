@@ -1,21 +1,17 @@
-﻿using static Enums.Enums;
+﻿using SavanaGameInterface;
+using static Enums.Enums;
 
 namespace SavanaGame
 {
     public interface IAnimal
     {
-        int VisionRange { get; set; }
-        int RunSpeed { get; set; }
-        char DisplayChar { get; set; }
-        bool IsHunter { get; set; }
-        char SpecialTrigerAnimal { get; set; }
-        char MoveTargetAnimal { get; set; }
+        IAnimalParams AnimalParams { get; set; }
 
-        Direction Wander();
-        Direction SpecialMove();
+        void Wander(int xPosition, int yPosition);
+        Direction SpecialMove(int xPosition, int yPosition);
         bool LookAround();
         void Rest();
-        void Die();
+        void Die(int xPosition, int yPosition);
         void Eat();
         void Think(int xPosition, int yPosition);
     }

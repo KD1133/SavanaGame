@@ -18,7 +18,7 @@ namespace SavanaGame
             {
                 for (int y = 0; y < field.GetLength(1); y++)
                 {
-                    if (oldField[x,y] != null && oldField[x, y].DisplayChar == 'A')
+                    if (oldField[x,y] != null && oldField[x, y].AnimalParams.DisplayChar == 'A')
                     {
                         field[x, y].Think(x, y);
                     }
@@ -28,7 +28,7 @@ namespace SavanaGame
             {
                 for (int y = 0; y < field.GetLength(1); y++)
                 {
-                    if (oldField[x, y] != null && oldField[x, y].DisplayChar == 'L')
+                    if (oldField[x, y] != null && oldField[x, y].AnimalParams.DisplayChar == 'L')
                     {
                         field[x, y].Think(x, y);
                     }

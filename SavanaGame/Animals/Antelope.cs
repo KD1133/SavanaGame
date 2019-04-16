@@ -2,16 +2,14 @@
 
 namespace SavanaGame.Animals
 {
-    class Antelope : Animal , IAnimal
+    public class Antelope : IAnimalParams
     {
-        public Antelope(IFieldVision fieldReader, IFieldChangesFacade movementFacade) : base(fieldReader, movementFacade)
-        {
-            VisionRange = 5;
-            RunSpeed = 2;
-            DisplayChar = 'A';
-            IsHunter = false;
-            SpecialTrigerAnimal = 'L';
-            MoveTargetAnimal = 'L';
-        }
+        public int VisionRange { get; set; } = 5;
+        public int RunSpeed { get; set; } = 2;
+        public char DisplayChar { get; set; } = 'A';
+        public int AvarageDiretionDistance { get; set; }  = 1;
+        public int WanderRestChance { get; set; }  = 4;
+        public bool IsHunter { get; set; } = false;
+        public int Health { get; set; } = 200;
     }
 }
